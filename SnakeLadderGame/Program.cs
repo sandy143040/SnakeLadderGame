@@ -10,6 +10,7 @@ namespace SnakeLadderGame
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcom to Snake Ladder Game");
             const int WinPosition = 100;
             int position = 0;
 
@@ -26,28 +27,36 @@ namespace SnakeLadderGame
                 switch (option)
                 {
                     case 0:
-                        // No Play
+                        //No Play
                         break;
                     case 1:
-                        // Ladder
+                        //Ladder
                         position += dieRoll;
                         break;
                     case 2:
-                        // Snake
+                        //Snake
                         position -= dieRoll;
                         break;
                 }
 
-                // Ensure position is within bounds
+                //Ensure position is within bounds
                 position = Math.Max(0, position);
                 position = Math.Min(WinPosition, position);
 
                 Console.WriteLine($"Rolled a {dieRoll}, landed on {position}");
             }
 
+            //Ensure player gets to exact winning position
+            while (position > WinPosition)
+            {
+                int dieRoll = random.Next(1, 7);
+                position -= dieRoll;
+                Console.WriteLine($"Overshot! Rolled a {dieRoll}, landed on {position}");
+            }
+
             Console.WriteLine("You won!");
 
-            // Reset game if player wants to play again
+            //Reset game if player wants to play again
             Console.WriteLine("Do you want to play again? (y/n)");
             string answer = Console.ReadLine();
             if (answer.ToLower() == "y")
@@ -55,6 +64,6 @@ namespace SnakeLadderGame
                 Main(args); // Recursive call to start a new game
             }
             Console.ReadLine();
-        }    
+        }
     }
 }
