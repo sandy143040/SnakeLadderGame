@@ -10,35 +10,47 @@ namespace SnakeLadderGame
     {
         static void Main(string[] args)
         {
+            int position = 0;
             Console.WriteLine("Welcome to Snake Ladder Game");
-            int position = 0; // starting position
-            Random rand = new Random();
+            Console.WriteLine("You are currently at position {0}.", position);
 
             while (position < 100)
-            { // game loop
-              // Roll the die and get a random number between 1 and 6
-                int roll = rand.Next(1, 7);
-                Console.WriteLine("You rolled a " + roll);
+            {
+                Console.WriteLine("Press enter to roll the die.");
+                Console.ReadLine();
 
-                // Check for options (No Play, Ladder, or Snake)
-                int option = rand.Next(0, 3);
-                switch (option)
+                int roll = (new Random()).Next(1, 7);
+                Console.WriteLine("You rolled a {0}.", roll);
+
+                switch (roll)
                 {
-                    case 0:
-                        Console.WriteLine("No Play. You stay at position " + position);
-                        break;
                     case 1:
-                        Console.WriteLine("You climbed a ladder to position " + (position + roll));
-                        position += roll;
-                        break;
                     case 2:
-                        Console.WriteLine("You slid down a snake to position " + (position - roll));
-                        position -= roll;
-                        if (position < 0) position = 0; // ensure position doesn't go below 0
+                    case 3:
+                    case 4:
+                    case 5:
+                        position += roll;
+                        Console.WriteLine("You moved forward {0} steps to position {1}.", roll, position);
+                        break;
+                    case 6:
+                        position += roll;
+                        Console.WriteLine("You moved forward {0} steps to position {1}.", roll, position);
+                        Console.WriteLine("Congratulations, you get to roll again!");
                         break;
                 }
 
-                Console.WriteLine("Your current position is " + position);
+                if (position == 14 || position == 27 || position == 42 || position == 50 || position == 71 || position == 89 || position == 95)
+                {
+                    Console.WriteLine("Oops, you landed on a snake! You slide down to position 7.");
+                    position = 7;
+                }
+                else if (position == 17 || position == 19 || position == 21 || position == 39 || position == 61 || position == 76 || position == 78 || position == 84 || position == 88 || position == 99)
+                {
+                    Console.WriteLine("Congratulations, you landed on a ladder! You climb up to position 90.");
+                    position = 90;
+                }
+
+                Console.WriteLine("You are now at position {0}.", position);
             }
 
             Console.WriteLine("Congratulations, you won!");
