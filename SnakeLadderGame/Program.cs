@@ -11,58 +11,42 @@ namespace SnakeLadderGame
         static void Main(string[] args)
         {
             Console.WriteLine("Welcom to Snake Ladder Game");
-            const int WinPosition = 100;
             int position = 0;
+            int diceRolls = 0;
+            Random rand = new Random();
 
-            Random random = new Random();
-
-            while (position < WinPosition)
+            while (position != 100)
             {
-                //Player rolls the die to get a number between 1 to 6
-                int dieRoll = random.Next(1, 7);
-
-                //Player checks for an option
-                int option = random.Next(0, 3); // 0: No Play, 1: Ladder, 2: Snake
+                int dice = rand.Next(1, 7);
+                int option = rand.Next(0, 3);
+                diceRolls++;
 
                 switch (option)
                 {
                     case 0:
-                        //No Play
+                        // No Play
                         break;
                     case 1:
-                        //Ladder
-                        position += dieRoll;
+                        // Ladder
+                        if (position + dice <= 100)
+                        {
+                            position += dice;
+                        }
                         break;
                     case 2:
-                        //Snake
-                        position -= dieRoll;
+                        // Snake
+                        position -= dice;
+                        if (position < 0)
+                        {
+                            position = 0;
+                        }
                         break;
                 }
 
-                //Ensure position is within bounds
-                position = Math.Max(0, position);
-                position = Math.Min(WinPosition, position);
-
-                Console.WriteLine($"Rolled a {dieRoll}, landed on {position}");
+                Console.WriteLine("Dice Roll: " + dice + " | Option: " + option + " | Position: " + position);
             }
 
-            //Ensure player gets to exact winning position
-            while (position > WinPosition)
-            {
-                int dieRoll = random.Next(1, 7);
-                position -= dieRoll;
-                Console.WriteLine($"Overshot! Rolled a {dieRoll}, landed on {position}");
-            }
-
-            Console.WriteLine("You won!");
-
-            //Reset game if player wants to play again
-            Console.WriteLine("Do you want to play again? (y/n)");
-            string answer = Console.ReadLine();
-            if (answer.ToLower() == "y")
-            {
-                Main(args); // Recursive call to start a new game
-            }
+            Console.WriteLine("Congratulations! You won the game in " + diceRolls + " dice rolls.");
             Console.ReadLine();
         }
     }
